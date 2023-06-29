@@ -6,4 +6,23 @@
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="random.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="fileIO.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="fileIO.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
