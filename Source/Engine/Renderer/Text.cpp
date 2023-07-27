@@ -25,4 +25,11 @@ namespace kiko
 		SDL_RenderCopy(rend.m_renderer, m_texture, NULL, &rect);
 
 	}
+	void Text::DrawV(Renderer& rend, const Vector2& pos)
+	{
+		int width, height;
+		SDL_QueryTexture(m_texture, nullptr, nullptr, &width, &height);
+		SDL_Rect rect{ pos.x - 35, pos.y+20, width, height };
+		SDL_RenderCopy(rend.m_renderer, m_texture, NULL, &rect);
+	}
 }

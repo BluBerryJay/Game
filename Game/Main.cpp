@@ -6,6 +6,8 @@
 #include "Renderer/ModelManager.h"
 #include "Renderer/Font.h"
 #include "Renderer/Text.h"
+#include "Renderer/ParticleSystem.h"
+#include "Framework/Emitter.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "SpaceGame.h"
@@ -56,9 +58,21 @@ int main(int argc, char* argv[])
 	kiko::g_rend.Initialize();
 	kiko::g_rend.CreateWindow("Kurwa", 800, 600);
 	kiko::g_inSys.Initialize();
+	
+	
+	
+	
+
+
+	
+
 
 	unique_ptr<kiko::SpaceGame> game = make_unique<kiko::SpaceGame>();
 	game->Initiliaze();
+	
+
+
+
 
 	kiko::Vector2 v2{ 300, 500 };
 
@@ -79,8 +93,7 @@ int main(int argc, char* argv[])
 		stars.push_back(Star(pos, vel));
 	}
 	
-	
-	
+
 	// Main game loop
 	bool quit = false;
 	while (!quit)
@@ -89,19 +102,16 @@ int main(int argc, char* argv[])
 		kiko::g_time.Tick();
 		kiko::g_inSys.Update();
 		
+		
+
 		// update game
-		
-		kiko::g_audSys.Update();
-		
 
+		if (kiko::g_inSys.GetKeyDown(SDL_SCANCODE_ESCAPE)) quit = true;
 
+		
 		game->Update(kiko::g_time.GetDeltaTime());
 		
-		/*if (kiko::g_inSys.GetKeyDown(SDL_SCANCODE_SPACE))
-		{
-			kiko::g_audSys.PlayOneShot("hit");
-		}
-		if (kiko::g_inSys.GetKeyDown(SDL_SCANCODE_ESCAPE)) quit = true;*/
+		
 		
 		kiko::g_rend.SetColor(0, 0, 0, 0);
 		kiko::g_rend.BeginFrame();
@@ -120,6 +130,8 @@ int main(int argc, char* argv[])
 
 		}		
 		game->Draw(kiko::g_rend);
+		
+
 		
 		kiko::g_rend.EndFrame();
 	}

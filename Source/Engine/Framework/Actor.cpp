@@ -9,6 +9,8 @@ void kiko::Actor::Update(float dt)
 		m_destroyed = (m_lifespan <= 0);
 		
 	}
+	m_transform.position += m_velocity * dt;
+	m_velocity *= std::pow(1.0f - m_damping, dt);
 }
 
 void kiko::Actor::Draw(kiko::Renderer& renderer)
