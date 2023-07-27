@@ -130,15 +130,15 @@ int main(int argc, char* argv[])
 
 		}		
 		game->Draw(kiko::g_rend);
-		
-
-		
 		kiko::g_rend.EndFrame();
 	}
 	
 	kiko::MemoryTracker::DisplayInfo();
-
+	
 
 
 	return 0;
+		
 }
+		
+

@@ -28,6 +28,12 @@
     <ClCompile Include="SpaceGame.cpp">
       <Filter>Source\CPP</Filter>
     </ClCompile>
+    <ClCompile Include="Heart.cpp">
+      <Filter>Source\CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFast.cpp">
+      <Filter>Source\CPP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -40,6 +46,12 @@
       <Filter>Source\Header</Filter>
     </ClInclude>
     <ClInclude Include="SpaceGame.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Heart.h">
+      <Filter>Source\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFast.h">
       <Filter>Source\Header</Filter>
     </ClInclude>
   </ItemGroup>

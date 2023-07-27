@@ -1,11 +1,11 @@
-#include "Enemy.h"
+#include "EnemyFast.h"
 #include "Player.h"
 #include "SpaceGame.h"
 #include "Renderer/Renderer.h"
 #include "Core/Core.h"
 #include "Framework/Scene.h"
 
-void Enemy::Update(float dt)
+void EnemyFast::Update(float dt)
 {
 	Actor::Update(dt);
 	kiko::Vector2 forward = kiko::Vector2{ 0,-1 }.Rotate(m_transform.rotation);
@@ -36,12 +36,12 @@ void Enemy::Update(float dt)
 
 }
 
-void Enemy::OnCollision(Actor* actor)
+void EnemyFast::OnCollision(Actor* actor)
 {
 
 	if (actor->m_tag == "Laser")
 	{
-		m_game->AddPoints(100);
+		m_game->AddPoints(150);
 		m_destroyed = true;
 	}
 	if (actor->m_tag == "Player")

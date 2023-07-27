@@ -31,12 +31,12 @@ void Player::Update(float dt)
 		kiko::Transform trans1{ m_transform.position, m_transform.rotation + kiko::DegreesToRadians(10.0f), m_transform.scale };
 		kiko::Transform trans2{ m_transform.position, m_transform.rotation - kiko::DegreesToRadians(10.0f), m_transform.scale };
 		std::unique_ptr<Weapon> weapon = make_unique<Weapon>(300.0f, trans1, kiko::g_modMan.Get("Laser.txt"));
-		weapon->m_tag = "Player";
+		weapon->m_tag = "Laser";
 		m_scene->Add(std::move(weapon));
 		
 
 		weapon = make_unique<Weapon>(300.0f, trans2, kiko::g_modMan.Get("Laser.txt"));
-		weapon->m_tag = "Player";
+		weapon->m_tag = "Laser";
 		m_scene->Add(std::move(weapon));
 		kiko::g_audSys.PlayOneShot("hit", false);
 		
@@ -49,17 +49,18 @@ void Player::Update(float dt)
 
 void Player::OnCollision(Actor* actor)
 {
-	if (actor->m_tag == "Enemy" && m_playerHealth <= 0)
+	if (actor->m_tag == "Enemy" && m_game->GetLives() > 0)
 	{
 		m_game->SetLives(m_game->GetLives() - 1);
+	}
+	if (actor->m_tag == "Enemy" && m_game->GetLives() == 0)
+	{
+		//m_game->SetLives(m_game->GetLives() - 1);
+		m_destroyed = true;
 		dynamic_cast<kiko::SpaceGame*>(m_game)->SetState(kiko::SpaceGame::eState::PlayerDeadStart);
 
-		m_destroyed = true;
 	}
-	else if (actor->m_tag == "Enemy") 
-	{
-		m_playerHealth -= 2.5;
-	}
+	
 	
 }
 
