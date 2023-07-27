@@ -86,14 +86,35 @@ void kiko::SpaceGame::Update(float dt)
 		break;
 	case kiko::SpaceGame::eState::Game:
 		
-		EmitTest();
+		
 		m_enemySpawnTimer += dt;
 		m_enemyFastSpawnTimer += dt;
 		m_heartSpawnTimer += dt;
 		kiko::g_audSys.Update();
 		
 
-		
+		for (auto& actor : m_scene->m_actors)
+		{
+			if(actor->m_destroyed && actor->m_tag != "Laser" && actor->m_tag != "Heart")
+			{
+				do
+				{
+					m_emitTimer += dt;
+					EmitAtDeath(actor->GetPosition(), dt);
+				} while (m_emitTimer >= m_spawnTime - 2.5f);
+			}
+			if (actor->m_destroyed && actor->m_tag == "Heart")
+			{
+				do
+				{
+					m_collectEmitTimer += dt;
+					EmitAtCollect(actor->GetPosition(), dt);
+
+
+				} while (m_collectEmitTimer >= m_spawnTime - 2.8f);
+			}
+
+		}
 		
 		if (m_enemySpawnTimer >= m_spawnTime)
 		{
@@ -112,7 +133,7 @@ void kiko::SpaceGame::Update(float dt)
 			m_enemyFastSpawnTimer = 0;
 			
 			
-			std::unique_ptr<EnemyFast> enemyF = std::make_unique<EnemyFast>(kiko::randomf(130.0f, 175.0f), kiko::Pi, kiko::Transform{ {kiko::random(kiko::g_rend.GetHeight()),kiko::random(kiko::g_rend.GetWidth())}, 0, 6 }, kiko::g_modMan.Get("EnemyShip.txt"));
+			std::unique_ptr<EnemyFast> enemyF = std::make_unique<EnemyFast>(kiko::randomf(150.0f, 195.0f), kiko::Pi, kiko::Transform{ {kiko::random(kiko::g_rend.GetHeight()),kiko::random(kiko::g_rend.GetWidth())}, 0, 6 }, kiko::g_modMan.Get("EnemyFastShip.txt"));
 			enemyF->m_tag = "Enemy";
 			enemyF->m_game = this;
 			m_scene->Add(std::move(enemyF));
@@ -137,6 +158,17 @@ void kiko::SpaceGame::Update(float dt)
 		break;
 	case kiko::SpaceGame::eState::PlayerDeadStart:
 		m_stateTimer = 3;
+		m_emitTimer = 0;
+		for (auto& actor : m_scene->m_actors)
+		{
+			if (actor->m_tag == "Player") 
+			{
+				do
+				{
+					EmitAtDeath(actor->GetPosition(), dt);
+				} while (m_emitTimer >= m_spawnTime - 2.5f);
+			}
+		}
 		if (m_lives == 0) m_state = eState::GameOver;
 		else m_state = eState::PlayerDead;
 		break;
@@ -188,24 +220,49 @@ void kiko::SpaceGame::Draw(Renderer& rend)
 	g_partSys.Draw(rend);
 	m_scene->Draw(rend);
 }
-void kiko::SpaceGame::EmitTest()
+void kiko::SpaceGame::EmitAtDeath(Vector2& pos, float dt)
 {
+	
 	EmitterData data;
 	data.burst = true;
-	data.burstCount = 100;
-	data.spawnRate = 200;
+	data.burstCount = 50;
+	data.spawnRate = 100;
 	data.angle = 0;
 	data.angleRange = kiko::Pi;
 	data.lifetimeMin = 0.5f;
-	data.lifetimeMin = 1.5f;
+	data.lifetimeMax = 1.5f;
 	data.speedMin = 50;
 	data.speedMax = 250;
 	data.damping = 0.5f;
 	data.color = kiko::Color{ 1, 1, 1, 1 };
-	Transform transform{ { g_inSys.GetMousePosition() }, 0, 1 };
+	Transform transform{ pos, 0, 1 };
 	auto emitter = std::make_unique<Emitter>(transform, data);
-	emitter->m_lifespan = 1.0f;
+	emitter->m_lifespan = .5f;
 	m_scene->Add(std::move(emitter));
+
 	
+
+}
+void kiko::SpaceGame::EmitAtCollect(Vector2& pos, float dt)
+{
+
+	EmitterData data;
+	data.burst = true;
+	data.burstCount = 25;
+	data.spawnRate = 10;
+	data.angle = 0;
+	data.angleRange = kiko::Pi;
+	data.lifetimeMin = 0.5f;
+	data.lifetimeMax = 1.5f;
+	data.speedMin = 50;
+	data.speedMax = 250;
+	data.damping = 0.5f;
+	data.color = kiko::Color{ 0, 1, 0, 1 };
+	Transform transform{ pos, 0, 1 };
+	auto emitter = std::make_unique<Emitter>(transform, data);
+	emitter->m_lifespan = .1f;
+	m_scene->Add(std::move(emitter));
+
+
 
 }

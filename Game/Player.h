@@ -12,7 +12,10 @@ public:
 		m_speed{ speed },
 		m_turnRate{ turnRate }
 	{}
+	kiko::Vector2 GetPosition() {
+		return m_transform.position;
 
+	}
 	void Update(float dt) override;
 	void OnCollision(Actor* actor) override;
 

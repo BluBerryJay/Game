@@ -27,13 +27,16 @@ namespace kiko
 		virtual void Update(float dt) override;
 		virtual void Draw(Renderer& rend) override;
 		void SetState(eState state) { m_state = state; };
-		virtual void EmitTest();
+		virtual void EmitAtDeath(Vector2& pos, float dt);
+		virtual void EmitAtCollect(Vector2& pos, float dt);
 	private:
 		eState m_state = eState::Title;
 		float m_enemySpawnTimer = 0;
 		float m_enemyFastSpawnTimer = 0;
 		float m_heartSpawnTimer = 0;
 
+		float m_emitTimer = 0;
+		float m_collectEmitTimer = 0;
 		float m_spawnTime = 3.0f;
 
 		float m_stateTimer = 0;

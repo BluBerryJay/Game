@@ -101,6 +101,8 @@ int main(int argc, char* argv[])
 		//update engine
 		kiko::g_time.Tick();
 		kiko::g_inSys.Update();
+		//kiko::g_partSys.Update(kiko::g_time.GetDeltaTime());
+
 		
 		
 
@@ -130,9 +132,12 @@ int main(int argc, char* argv[])
 
 		}		
 		game->Draw(kiko::g_rend);
+		//kiko::g_partSys.Draw(kiko::g_rend);
+		
+		
 		kiko::g_rend.EndFrame();
 	}
-	
+	game->ShutDown();
 	kiko::MemoryTracker::DisplayInfo();
 	
 

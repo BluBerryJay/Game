@@ -12,7 +12,10 @@ public:
 		m_fireRate = 2.0f;
 		m_fireTimer = m_fireRate;
 	}
+	kiko::Vector2 GetPosition() {
+		return m_transform.position;
 
+	}
 	void Update(float dt) override;
 	void OnCollision(Actor* actor) override;
 

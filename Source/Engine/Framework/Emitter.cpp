@@ -40,7 +40,7 @@ void kiko::Emitter::Emit()
 		data.prevPosition = data.position;
 		data.color = m_data.color;
 
-		float angle = m_transform.rotation + m_data.angle + randomf(m_data.angleRange, m_data.angleRange);
+		float angle = m_transform.rotation + m_data.angle + randomf(-m_data.angleRange, m_data.angleRange);
 		Vector2 direction = Vector2{ 0,-1 }.Rotate(angle);
 		data.velocity = direction * randomf(m_data.speedMin, m_data.speedMax);
 		data.damping = m_data.damping;

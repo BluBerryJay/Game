@@ -18,8 +18,10 @@ namespace kiko
 		T* GetActor();
 
 		friend class Actor;
-	private:
 		std::list<std::unique_ptr<Actor>> m_actors;
+
+	private:
+
 
 	};
 	template<typename T>

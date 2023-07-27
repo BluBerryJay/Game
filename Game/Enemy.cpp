@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "SpaceGame.h"
+#include "Renderer/ParticleSystem.h"
 #include "Renderer/Renderer.h"
 #include "Core/Core.h"
 #include "Framework/Scene.h"
@@ -8,6 +9,7 @@
 void Enemy::Update(float dt)
 {
 	Actor::Update(dt);
+	kiko::g_partSys.Update(dt);
 	kiko::Vector2 forward = kiko::Vector2{ 0,-1 }.Rotate(m_transform.rotation);
 	kiko::Vector2 equate;
 	Player* player = m_scene->GetActor<Player>();
@@ -41,11 +43,13 @@ void Enemy::OnCollision(Actor* actor)
 
 	if (actor->m_tag == "Laser")
 	{
+		
 		m_game->AddPoints(100);
 		m_destroyed = true;
 	}
 	if (actor->m_tag == "Player")
 	{
+		
 		m_destroyed = true;
 	}
 	

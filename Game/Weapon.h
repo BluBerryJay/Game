@@ -14,7 +14,10 @@ public:
 
 	void Update(float dt) override;
 	void OnCollision(Actor* actor) override;
+	kiko::Vector2 GetPosition() {
+		return m_transform.position;
 
+	}
 
 protected:
 	float m_speed = 0;

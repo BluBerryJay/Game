@@ -19,8 +19,11 @@ namespace kiko
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& renderer);
 
-		inline float GetRadius() { return (m_model) ? m_model->GetRadius() * m_transform.scale : 0; }
+		float GetRadius() { return (m_model) ? m_model->GetRadius() * m_transform.scale : -10000; }
 		virtual void OnCollision(Actor* other) {}
+		Vector2& GetPosition() {
+			return m_transform.position;
+		}
 		
 		void AddForce(const Vector2& force) { m_velocity += force; }
 		void SetDamping(float damping) { m_damping = damping; }
@@ -32,8 +35,8 @@ namespace kiko
 		std::string m_tag;
 		float m_lifespan = -1.0f;
 
-	protected:
 		bool m_destroyed = false;
+	protected:
 
 		std::shared_ptr<Model> m_model;
 		Vector2 m_velocity;

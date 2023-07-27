@@ -2,7 +2,7 @@
 
 namespace kiko
 {
-	ParticleSystem g_partSys;
+	ParticleSystem g_partSys(1000);
 
 	void kiko::ParticleSystem::Update(float dt)
 	{
